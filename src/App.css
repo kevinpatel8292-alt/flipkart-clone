@@ -799,338 +799,73 @@
   box-shadow: 0 0 0 2px var(--fk-light-blue);
 }
 
-/* --- MOBILE REPLICA STYLES --- */
-.mobile-only { display: none; }
-.desktop-only { display: block; }
-
-@media (max-width: 768px) {
-  .desktop-only { display: none !important; }
-  .mobile-only { display: block; }
-  
-  body {
-    background-color: #f1f3f6; /* light grey for gaps */
+/* --- RESPONSIVE STYLES --- */
+@media (max-width: 900px) {
+  .navbar-container {
+    flex-wrap: wrap;
+    padding: 8px 16px;
+    gap: 12px;
   }
-
-  /* Mobile Header */
-  .mobile-header {
-    background: #b1161d; /* red Flipkart header color */
-    color: white;
-    padding-bottom: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  .navbar-search-wrapper {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
   }
-  .mh-tabs {
-    display: flex;
-    justify-content: space-around;
+  .navbar-actions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  .main-shop-container {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .filters-sidebar {
+    width: 100%;
+    margin-bottom: 24px;
+    position: static;
+  }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .categories-list {
+    justify-content: flex-start;
     padding: 12px 16px;
   }
-  .mh-tab {
-    background: white;
-    color: #333;
-    padding: 6px 16px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .mh-tab.active {
-    background: #ffe500;
-    color: #333;
-  }
-  .mh-tab .fk-icon {
-    color: #2874f0;
-    font-style: italic;
-    font-family: serif;
-    font-size: 1.1rem;
-    font-weight: 800;
-  }
-  .mh-address-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 16px 12px;
-    font-size: 0.8rem;
-    color: #fff;
-  }
-  .mh-address {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0,0,0,0.2);
-    padding: 4px 8px;
-    border-radius: 12px;
-    max-width: 80%;
-  }
-  .mh-address-text {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .mh-coins {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(0,0,0,0.2);
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: 700;
-  }
-  .mh-coin-icon {
-    background: #ffe500;
-    border-radius: 50%;
-    padding: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .mh-search-wrapper {
-    padding: 0 16px;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .mh-search-box {
-    flex: 1;
-    background: white;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    gap: 8px;
-  }
-  .mh-search-box input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 0.95rem;
-    color: #333;
-  }
-  .mh-categories {
-    display: flex;
-    justify-content: space-between;
-    background: white;
-    padding: 12px 16px 8px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    margin: 0 4px;
-  }
-  .mh-cat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.75rem;
-    color: #333;
-  }
-  .mh-cat-item.active {
-    border-bottom: 2px solid #2874f0;
-    padding-bottom: 4px;
-  }
-  .mh-cat-icon img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-  }
+}
 
-  /* Sale Timer Banner */
-  .mobile-sale-timer {
-    background: #e8f0fe;
-    margin: 8px 16px;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #333;
-    gap: 8px;
-  }
-  .timer-block {
-    background: #2874f0;
-    color: white;
-    padding: 4px 6px;
-    border-radius: 4px;
-  }
-
-  /* Flash Sale Carousel Fixes */
-  .mobile-only .carousel-wrapper {
-    margin: 0 16px;
-    padding: 0;
-  }
-  .mobile-only .carousel {
-    height: 200px;
-    border-radius: 12px;
-  }
-  .mobile-only .slide-content {
-    display: none;
-  }
-  .mobile-only .slide-img {
-    width: 100%;
-    height: 100%;
-    max-height: none;
-    object-fit: cover;
-    border-radius: 12px;
-    animation: none;
-  }
-  .mobile-only .carousel-arrow, .mobile-only .carousel-dots {
-    display: none;
-  }
-
-  /* Horizontal Scroller */
-  .mobile-product-scroller {
-    background: #fdf3a4;
-    margin: 16px 16px;
-    border-radius: 12px;
-    padding: 16px 0 16px 16px;
-  }
-  .mps-header h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #333;
-  }
-  .mps-container {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-  }
-  .mps-container::-webkit-scrollbar {
-    display: none;
-  }
-  .mps-card {
-    min-width: 130px;
-    background: white;
-    border-radius: 8px;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  .mps-img-wrapper {
-    height: 100px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .mps-img-wrapper img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-  }
-  .mps-info {
-    width: 100%;
-  }
-  .mps-category {
-    display: block;
-    font-size: 0.7rem;
-    color: #878787;
-    margin-bottom: 2px;
-  }
-  .mps-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #333;
-    display: block;
-  }
-  .view-all-circle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #e8f0fe;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Top Selection */
-  .mobile-top-selection {
-    background: #e65100;
-    margin: 16px 16px;
-    padding: 16px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-  }
-  .mobile-top-selection h3 {
-    font-size: 1.1rem;
-  }
-  .mts-arrow {
-    background: white;
-    color: #333;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Main content padding adjustment */
-  .main-shop-container {
-    padding: 0;
-    margin-bottom: 70px; /* Space for bottom nav */
-  }
-  
+@media (max-width: 500px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    padding: 0 8px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
   }
-  
-  .products-grid-header {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    margin-bottom: 8px;
-  }
-
-  /* Bottom Nav */
-  .mobile-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 16px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    z-index: 1000;
-  }
-  .mbn-item {
-    display: flex;
+  .product-detail-modal-content {
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    color: #878787;
-    font-size: 0.7rem;
-    font-weight: 500;
-    cursor: pointer;
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
   }
-  .mbn-item.active {
-    color: #2874f0;
+  .product-detail-left, .product-detail-right {
+    width: 100%;
+    overflow-y: visible;
   }
-  .mbn-cart-icon {
-    position: relative;
+  .product-detail-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
   }
-  .mbn-badge {
-    position: absolute;
-    top: -6px;
-    right: -8px;
-    background: #ff3f6c;
-    color: white;
-    font-size: 0.6rem;
-    padding: 0 4px;
-    border-radius: 10px;
-    font-weight: 700;
+  .nav-dropdown-trigger {
+    display: none;
+  }
+  .modal-action-buttons {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+    z-index: 10;
   }
 }
+
+
 
 .gallery-thumb img {
   max-width: 100%;
