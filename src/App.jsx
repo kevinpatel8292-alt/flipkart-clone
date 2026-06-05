@@ -9,6 +9,10 @@ import ProductModal from './components/ProductModal';
 import CartDrawer from './components/CartDrawer';
 import Footer from './components/Footer';
 import { Star, Filter, SlidersHorizontal, RefreshCw } from 'lucide-react';
+import MobileHeader from './components/mobile/MobileHeader';
+import MobileBottomNav from './components/mobile/MobileBottomNav';
+import MobileProductScroller from './components/mobile/MobileProductScroller';
+import { MobileSaleTimer, MobileTopSelection } from './components/mobile/MobileBanners';
 
 export default function App() {
   // Theme State
@@ -130,31 +134,56 @@ export default function App() {
   return (
     <div className="app">
       {/* Navbar header */}
-      <Navbar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        cartCount={totalCartCount}
-        onCartOpen={() => setIsCartOpen(true)}
-        theme={theme}
-        toggleTheme={toggleTheme}
-        onSelectProduct={(prod) => setSelectedProduct(prod)}
-      />
+      <div className="desktop-only">
+        <Navbar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          cartCount={totalCartCount}
+          onCartOpen={() => setIsCartOpen(true)}
+          theme={theme}
+          toggleTheme={toggleTheme}
+          onSelectProduct={(prod) => setSelectedProduct(prod)}
+        />
+      </div>
+
+      <div className="mobile-only">
+        <MobileHeader searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </div>
 
       {/* Category sub-header */}
-      <Categories
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
+      <div className="desktop-only">
+        <Categories
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </div>
 
       {/* Carousel Section - show only on the main screen when no narrow category or search filters are applied */}
-      {selectedCategory === 'all' && searchQuery.trim() === '' && (
-        <BannerCarousel />
-      )}
+      <div className="desktop-only">
+        {selectedCategory === 'all' && searchQuery.trim() === '' && (
+          <BannerCarousel />
+        )}
+      </div>
+
+      <div className="mobile-only">
+        {selectedCategory === 'all' && searchQuery.trim() === '' && (
+          <>
+            <MobileSaleTimer />
+            <BannerCarousel />
+            <MobileProductScroller 
+              title="Kevin, still looking for these?" 
+              products={filteredProducts.slice(0, 5)} 
+              onSelectProduct={(prod) => setSelectedProduct(prod)} 
+            />
+            <MobileTopSelection />
+          </>
+        )}
+      </div>
 
       {/* Main product shop catalog */}
       <main className="main-shop-container" style={{ marginTop: selectedCategory === 'all' && searchQuery.trim() === '' ? '0' : '24px' }}>
         {/* Filters Sidebar */}
-        <aside className="filters-sidebar">
+        <aside className="filters-sidebar desktop-only">
           <div className="filters-header flex-between">
             <span className="flex-center" style={{ gap: '6px' }}>
               <SlidersHorizontal size={16} /> Filters
@@ -298,7 +327,13 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <div className="desktop-only">
+        <Footer />
+      </div>
+
+      <div className="mobile-only">
+        <MobileBottomNav cartCount={totalCartCount} onCartOpen={() => setIsCartOpen(true)} />
+      </div>
 
       {/* Cart Drawer */}
       <CartDrawer
