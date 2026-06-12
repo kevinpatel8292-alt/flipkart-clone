@@ -50,7 +50,7 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
         <div className="product-card-footer">
           {product.isAssured ? (
             <div className="badge-assured">
-              <span>f</span>Assured
+              <span>s</span>Assured
             </div>
           ) : (
             <div /> // Placeholder

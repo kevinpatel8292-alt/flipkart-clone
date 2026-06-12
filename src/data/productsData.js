@@ -365,7 +365,7 @@ export const productsData = [
     },
     reviews: [
       { name: 'Nitin S.', rating: 5, comment: 'Loads of almonds and seeds inside. Tastes very premium. Crunch stays long even in warm milk.', date: 'May 08, 2026' },
-      { name: 'Megha V.', rating: 4, comment: 'Great breakfast item. Reduced price on Flipkart grocery is a steal.', date: 'Apr 24, 2026' }
+      { name: 'Megha V.', rating: 4, comment: 'Great breakfast item. Reduced price on SwiftShop grocery is a steal.', date: 'Apr 24, 2026' }
     ]
   },
   {
@@ -476,7 +476,7 @@ export const productsData = [
     },
     reviews: [
       { name: 'Pranav Nair', rating: 5, comment: 'Sony picture quality is unmatched. Sound is decent, but adding a soundbar makes it a complete home theater.', date: 'May 06, 2026' },
-      { name: 'Jyoti B.', rating: 5, comment: 'Google TV interface is seamless. Kids love the voice remote. Setup was done for free by Flipkart engineers.', date: 'Apr 26, 2026' }
+      { name: 'Jyoti B.', rating: 5, comment: 'Google TV interface is seamless. Kids love the voice remote. Setup was done for free by SwiftShop engineers.', date: 'Apr 26, 2026' }
     ]
   }
 ];

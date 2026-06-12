@@ -189,7 +189,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Flipkart Assured */}
+          {/* SwiftShop Assured */}
           <div className="filter-section">
             <h5 className="filter-title">Brand Assurance</h5>
             <label className="choice-item">
@@ -199,7 +199,7 @@ export default function App() {
                 onChange={(e) => setOnlyAssured(e.target.checked)}
               />
               <span className="badge-assured" style={{ fontSize: '0.85rem' }}>
-                <span>f</span>Assured
+                <span>s</span>Assured
               </span>
             </label>
           </div>

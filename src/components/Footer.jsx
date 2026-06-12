@@ -12,7 +12,7 @@ export default function Footer() {
             <li><a href="#">Contact Us</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Careers</a></li>
-            <li><a href="#">Flipkart Stories</a></li>
+            <li><a href="#">SwiftShop Stories</a></li>
             <li><a href="#">Press</a></li>
             <li><a href="#">Corporate Information</a></li>
           </ul>
@@ -58,7 +58,7 @@ export default function Footer() {
         <div className="footer-column footer-column-special">
           <h4>Mail Us:</h4>
           <p style={{ color: '#aeaeae', marginBottom: '16px' }}>
-            Flipkart Internet Private Limited,<br />
+            SwiftShop Internet Private Limited,<br />
             Buildings Alyssa, Begonia &<br />
             Clove Embassy Tech Village,<br />
             Outer Ring Road, Devarabeesanahalli Village,<br />
@@ -67,7 +67,7 @@ export default function Footer() {
           </p>
           <h4>Registered Office Address:</h4>
           <p style={{ color: '#aeaeae' }}>
-            Flipkart Internet Private Limited,<br />
+            SwiftShop Internet Private Limited,<br />
             Buildings Alyssa, Begonia &<br />
             Clove Embassy Tech Village,<br />
             Outer Ring Road, Devarabeesanahalli Village,<br />
@@ -101,7 +101,7 @@ export default function Footer() {
         </div>
         
         <div>
-          © 2007-2026 Flipkart.com. All rights reserved.
+          © 2007-2026 SwiftShop.com. All rights reserved.
         </div>
       </div>
     </footer>

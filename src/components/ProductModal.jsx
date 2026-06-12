@@ -96,7 +96,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
               </span>
               {product.isAssured && (
                 <div className="badge-assured" style={{ fontSize: '0.85rem' }}>
-                  <span>f</span>Assured
+                  <span>s</span>Assured
                 </div>
               )}
             </div>
@@ -127,7 +127,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                 </li>
                 <li className="offer-item">
                   <Tag size={14} className="offer-tag" />
-                  <span><strong>Bank Offer:</strong> 5% Unlimited Cashback on Flipkart Axis Bank Credit Card.</span>
+                  <span><strong>Bank Offer:</strong> 5% Unlimited Cashback on SwiftShop Axis Bank Credit Card.</span>
                 </li>
                 <li className="offer-item">
                   <Tag size={14} className="offer-tag" />

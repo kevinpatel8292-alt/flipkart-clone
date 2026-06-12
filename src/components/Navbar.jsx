@@ -42,7 +42,7 @@ export default function Navbar({ searchQuery, setSearchQuery, cartCount, onCartO
       <div className="navbar-container">
         {/* Logo */}
         <div className="navbar-logo">
-          <span className="logo-main">Flipkart</span>
+          <span className="logo-main">SwiftShop</span>
           <span className="logo-sub">
             Explore <span>Plus</span>
             <span style={{ color: 'var(--fk-yellow)', fontSize: '0.8rem', marginLeft: '2px' }}>✦</span>
@@ -148,7 +148,7 @@ export default function Navbar({ searchQuery, setSearchQuery, cartCount, onCartO
           </button>
 
           {/* Theme Toggle Button */}
-          <button className="theme-toggle-btn" onClick={toggleTheme} title="Toggle Flipkart Plus Mode">
+          <button className="theme-toggle-btn" onClick={toggleTheme} title="Toggle SwiftShop Plus Mode">
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
         </div>
