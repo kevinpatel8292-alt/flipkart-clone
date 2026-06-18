@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, ShoppingCart, ChevronDown, User, Sun, Moon, Bell, HelpCircle, Briefcase, Download, LogOut, Heart, Gift, ShieldAlert } from 'lucide-react';
 import { productsData } from '../data/productsData';
 
-export default function Navbar({ searchQuery, setSearchQuery, cartCount, onCartOpen, theme, toggleTheme, onSelectProduct }) {
+export default function Navbar({ searchQuery, setSearchQuery, cartCount, onCartOpen, theme, toggleTheme, onSelectProduct, onWishlistOpen }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const suggestionRef = useRef(null);
@@ -105,9 +105,16 @@ export default function Navbar({ searchQuery, setSearchQuery, cartCount, onCartO
               <a href="#" className="dropdown-item">
                 <User size={16} /> My Profile
               </a>
-              <a href="#" className="dropdown-item">
+              <button
+                className="dropdown-item"
+                style={{ width: '100%', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', font: 'inherit', color: 'inherit' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onWishlistOpen();
+                }}
+              >
                 <Heart size={16} /> Wishlist
-              </a>
+              </button>
               <a href="#" className="dropdown-item">
                 <Gift size={16} /> Orders & Rewards
               </a>

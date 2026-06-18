@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { X, Star, ShoppingCart, Shield, Truck, Award, Tag } from 'lucide-react';
+import { X, Star, ShoppingCart, Shield, Truck, Award, Tag, Heart } from 'lucide-react';
 
-export default function ProductModal({ product, onClose, onAddToCart }) {
+export default function ProductModal({ product, onClose, onAddToCart, onPlaceOrder, isWishlisted, onToggleWishlist }) {
   const [activeImg, setActiveImg] = useState(product.images[0] || product.thumbnail);
   const [pincode, setPincode] = useState('');
   const [deliveryStatus, setDeliveryStatus] = useState('');
@@ -64,19 +64,36 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
             )}
 
             {/* Action Buttons */}
-            <div className="modal-action-buttons">
+            <div className="modal-action-buttons" style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: '12px' }}>
               <button className="modal-btn modal-btn-cart" onClick={handleAddToCart}>
                 <ShoppingCart size={18} /> Add to Cart
               </button>
               <button
                 className="modal-btn modal-btn-buy"
                 onClick={() => {
-                  alert('Order placed successfully! (Simulation)');
-                  onAddToCart(product);
+                  onPlaceOrder(product.price);
                   onClose();
                 }}
               >
                 Buy Now
+              </button>
+              <button
+                className={`modal-btn-wishlist ${isWishlisted ? 'active' : ''}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  backgroundColor: isWishlisted ? '#fff0f3' : 'var(--bg-primary)',
+                  transition: 'all 0.2s',
+                  padding: '14px 0'
+                }}
+                onClick={() => onToggleWishlist(product)}
+                title="Toggle Wishlist"
+              >
+                <Heart size={20} fill={isWishlisted ? '#ff3f6c' : 'none'} stroke={isWishlisted ? '#ff3f6c' : 'var(--text-secondary)'} />
               </button>
             </div>
           </div>

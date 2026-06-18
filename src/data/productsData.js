@@ -167,7 +167,7 @@ export const productsData = [
     originalPrice: 154990,
     price: 114990,
     discountPercentage: 25,
-    rating: { rate: 4.5, count: 1205 },
+    rating: { rate: 3.8, count: 1205 },
     isAssured: true,
     highlights: [
       'AMD Ryzen 9 Octa Core Processor',
@@ -204,7 +204,7 @@ export const productsData = [
     originalPrice: 8495,
     price: 5499,
     discountPercentage: 35,
-    rating: { rate: 4.3, count: 4239 },
+    rating: { rate: 3.2, count: 4239 },
     isAssured: true,
     highlights: [
       'Outer Material: Mesh, Synthetic Leather',
@@ -239,7 +239,7 @@ export const productsData = [
     originalPrice: 4999,
     price: 2499,
     discountPercentage: 50,
-    rating: { rate: 4.1, count: 832 },
+    rating: { rate: 2.4, count: 832 },
     isAssured: false,
     highlights: [
       'Fabric: 100% Premium Organic Cotton',
@@ -274,7 +274,7 @@ export const productsData = [
     originalPrice: 12999,
     price: 6999,
     discountPercentage: 46,
-    rating: { rate: 4.4, count: 3209 },
+    rating: { rate: 3.5, count: 3209 },
     isAssured: true,
     highlights: [
       'Ergonomic S-shape design with adjustable lumbar support',
@@ -337,10 +337,10 @@ export const productsData = [
     id: 'groc-01',
     title: 'Kellogg\'s Muesli with 21% Fruit, Nut & Seeds (Pack of 750g)',
     category: 'grocery',
-    thumbnail: 'https://images.unsplash.com/photo-1517881917430-e70dfb3610aa?w=300&auto=format&fit=crop&q=80',
+    thumbnail: '/images/kelloggs_muesli_front.png',
     images: [
-      'https://images.unsplash.com/photo-1517881917430-e70dfb3610aa?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1521485950395-bcfb507d72a8?w=600&auto=format&fit=crop&q=80'
+      '/images/kelloggs_muesli_front.png',
+      '/images/kelloggs_muesli_bowl.png'
     ],
     originalPrice: 499,
     price: 389,
@@ -380,7 +380,7 @@ export const productsData = [
     originalPrice: 25999,
     price: 23999,
     discountPercentage: 7,
-    rating: { rate: 4.4, count: 5210 },
+    rating: { rate: 3.9, count: 5210 },
     isAssured: true,
     highlights: [
       '8 GB RAM | 128 GB ROM',

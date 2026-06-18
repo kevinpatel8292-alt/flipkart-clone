@@ -8,7 +8,8 @@ import ProductCard from './components/ProductCard';
 import ProductModal from './components/ProductModal';
 import CartDrawer from './components/CartDrawer';
 import Footer from './components/Footer';
-import { Star, Filter, SlidersHorizontal, RefreshCw } from 'lucide-react';
+import WishlistDrawer from './components/WishlistDrawer';
+import { Star, Filter, SlidersHorizontal, RefreshCw, X } from 'lucide-react';
 
 export default function App() {
   // Theme State
@@ -25,6 +26,13 @@ export default function App() {
   // Selected Product (Detail Modal) State
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Toast Notifications State
+  const [toasts, setToasts] = useState([]);
+
+  // Wishlist States
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+
   // Filter States
   const [maxPrice, setMaxPrice] = useState(150000);
   const [onlyAssured, setOnlyAssured] = useState(false);
@@ -37,6 +45,41 @@ export default function App() {
 
   const toggleTheme = () => {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  // Toast helper functions
+  const addToast = (title, message, thumbnail = null, type = 'success') => {
+    const id = Date.now();
+    const newToast = { id, title, message, thumbnail, type, isExiting: false };
+    
+    // Show maximum of 3 toasts to prevent crowding
+    setToasts((prev) => [...prev.slice(-2), newToast]);
+    
+    // Start exit animation after 3.7 seconds
+    setTimeout(() => {
+      setToasts((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, isExiting: true } : t))
+      );
+    }, 3700);
+
+    // Remove toast completely after 4 seconds
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  const handleToastViewCart = (toastId) => {
+    setIsCartOpen(true);
+    setToasts((prev) => prev.filter((t) => t.id !== toastId));
+  };
+
+  const handleDismissToast = (toastId) => {
+    setToasts((prev) =>
+      prev.map((t) => (t.id === toastId ? { ...t, isExiting: true } : t))
+    );
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== toastId));
+    }, 300);
   };
 
   // Cart Operations
@@ -53,7 +96,37 @@ export default function App() {
       return [...prevItems, { product, quantity: 1 }];
     });
     // Optional: Open cart drawer instantly when adding to cart
-    setIsCartOpen(true);
+    addToast('Added to Cart', product.title, product.thumbnail, 'cart');
+  };
+
+  const handlePlaceOrder = (totalAmount) => {
+    // Clear cart
+    setCartItems([]);
+    // Close drawer
+    setIsCartOpen(false);
+
+    // Format price
+    const formattedAmount = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(totalAmount);
+
+    // Show order success toast
+    addToast('Order Placed', `Order placed successfully! Total: ${formattedAmount}`, null, 'order');
+  };
+
+  const handleToggleWishlist = (product) => {
+    const existing = wishlistItems.find((item) => item.id === product.id);
+    if (existing) {
+      handleRemoveFromWishlist(product.id);
+    } else {
+      setWishlistItems((prev) => [...prev, product]);
+    }
+  };
+
+  const handleRemoveFromWishlist = (productId) => {
+    setWishlistItems((prev) => prev.filter((item) => item.id !== productId));
   };
 
   const handleUpdateQuantity = (productId, newQuantity) => {
@@ -138,6 +211,7 @@ export default function App() {
         theme={theme}
         toggleTheme={toggleTheme}
         onSelectProduct={(prod) => setSelectedProduct(prod)}
+        onWishlistOpen={() => setIsWishlistOpen(true)}
       />
 
       {/* Category sub-header */}
@@ -264,6 +338,8 @@ export default function App() {
                   product={product}
                   onSelectProduct={(prod) => setSelectedProduct(prod)}
                   onAddToCart={handleAddToCart}
+                  isWishlisted={wishlistItems.some((item) => item.id === product.id)}
+                  onToggleWishlist={handleToggleWishlist}
                 />
               ))}
             </div>
@@ -307,6 +383,17 @@ export default function App() {
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
+        onClearCart={() => setCartItems([])}
+        onPlaceOrder={handlePlaceOrder}
+      />
+
+      {/* Wishlist Drawer */}
+      <WishlistDrawer
+        isOpen={isWishlistOpen}
+        onClose={() => setIsWishlistOpen(false)}
+        wishlistItems={wishlistItems}
+        onRemoveFromWishlist={handleRemoveFromWishlist}
+        onAddToCart={handleAddToCart}
       />
 
       {/* Product Detail Modal */}
@@ -315,8 +402,51 @@ export default function App() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={handleAddToCart}
+          onPlaceOrder={handlePlaceOrder}
+          isWishlisted={wishlistItems.some((item) => item.id === selectedProduct.id)}
+          onToggleWishlist={handleToggleWishlist}
         />
       )}
+
+      {/* Toast Notifications Container */}
+      <div className="toast-container">
+        {toasts.map((toast) => (
+          <div
+            key={toast.id}
+            className={`toast-item ${toast.isExiting ? 'exit' : ''}`}
+            style={toast.type === 'order' ? { borderLeftColor: 'var(--fk-green)' } : {}}
+          >
+            {toast.thumbnail && (
+              <img src={toast.thumbnail} alt={toast.title} className="toast-img" />
+            )}
+            <div className="toast-content">
+              <span className="toast-title" style={toast.type === 'order' ? { color: 'var(--fk-green)' } : {}}>
+                {toast.title}
+              </span>
+              <div className="toast-message text-truncate" style={{ maxWidth: '280px' }}>
+                {toast.message}
+              </div>
+              {toast.type === 'cart' && (
+                <div className="toast-actions">
+                  <button
+                    className="toast-btn-view"
+                    onClick={() => handleToastViewCart(toast.id)}
+                  >
+                    View Cart
+                  </button>
+                </div>
+              )}
+            </div>
+            <button
+              className="toast-close-btn"
+              onClick={() => handleDismissToast(toast.id)}
+            >
+              <X size={14} />
+            </button>
+            <div className="toast-progress" style={toast.type === 'order' ? { backgroundColor: 'var(--fk-green)' } : {}} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

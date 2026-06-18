@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 
-export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantity, onRemoveItem }) {
+export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantity, onRemoveItem, onClearCart, onPlaceOrder }) {
   // Format currency
   const formatPrice = (value) => {
     return new Intl.NumberFormat('en-IN', {
@@ -60,7 +60,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
 
                 {/* Item Info */}
                 <div className="cart-item-details">
-                  <h4 className="cart-item-title text-truncate" title={product.title}>
+                  <h4 className="cart-item-title" title={product.title}>
                     {product.title}
                   </h4>
                   <div className="cart-item-price-row">
@@ -135,7 +135,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
             <button
               className="checkout-btn"
               onClick={() => {
-                alert(`Checkout simulation!\nTotal Order Value: ${formatPrice(totalAmount)}\nThank you for shopping!`);
+                onPlaceOrder(totalAmount);
               }}
             >
               Place Order

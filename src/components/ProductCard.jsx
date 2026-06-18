@@ -1,7 +1,7 @@
 import React from 'react';
-import { Star, Plus } from 'lucide-react';
+import { Star, Plus, Heart } from 'lucide-react';
 
-export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
+export default function ProductCard({ product, onSelectProduct, onAddToCart, isWishlisted, onToggleWishlist }) {
   // Format currency
   const formatPrice = (value) => {
     return new Intl.NumberFormat('en-IN', {
@@ -21,6 +21,16 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
       {/* Product Image */}
       <div className="product-card-img-wrapper">
         <img src={product.thumbnail} alt={product.title} className="product-card-img" />
+        <button
+          className={`card-wishlist-btn ${isWishlisted ? 'active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist(product);
+          }}
+          title="Toggle Wishlist"
+        >
+          <Heart size={16} fill={isWishlisted ? '#ff3f6c' : 'none'} stroke={isWishlisted ? '#ff3f6c' : 'var(--text-secondary)'} />
+        </button>
       </div>
 
       {/* Product Information */}
