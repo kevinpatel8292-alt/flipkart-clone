@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Star, ShoppingCart, Shield, Truck, Award, Tag, Heart } from 'lucide-react';
+import { useState } from 'react';
+import { X, Star, ShoppingCart, Truck, Award, Tag, Heart } from 'lucide-react';
 
 export default function ProductModal({ product, onClose, onAddToCart, onPlaceOrder, isWishlisted, onToggleWishlist }) {
   const [activeImg, setActiveImg] = useState(product.images[0] || product.thumbnail);

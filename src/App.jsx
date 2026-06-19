@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { productsData } from './data/productsData';
 import Navbar from './components/Navbar';
@@ -9,7 +9,8 @@ import ProductModal from './components/ProductModal';
 import CartDrawer from './components/CartDrawer';
 import Footer from './components/Footer';
 import WishlistDrawer from './components/WishlistDrawer';
-import { Star, Filter, SlidersHorizontal, RefreshCw, X } from 'lucide-react';
+import CheckoutModal from './components/CheckoutModal';
+import { Filter, SlidersHorizontal, RefreshCw, X } from 'lucide-react';
 
 export default function App() {
   // Theme State
@@ -32,6 +33,12 @@ export default function App() {
   // Wishlist States
   const [wishlistItems, setWishlistItems] = useState([]);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+
+  // Checkout States
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutAmount, setCheckoutAmount] = useState(0);
+  const [checkoutItems, setCheckoutItems] = useState([]);
+
 
   // Filter States
   const [maxPrice, setMaxPrice] = useState(150000);
@@ -99,21 +106,53 @@ export default function App() {
     addToast('Added to Cart', product.title, product.thumbnail, 'cart');
   };
 
-  const handlePlaceOrder = (totalAmount) => {
-    // Clear cart
-    setCartItems([]);
-    // Close drawer
+  const handlePlaceOrder = (totalAmount, items) => {
+    setCheckoutAmount(totalAmount);
+    setCheckoutItems(items);
     setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
 
+  const handleConfirmOrder = (customerName, details) => {
     // Format price
     const formattedAmount = new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
       maximumFractionDigits: 0
-    }).format(totalAmount);
+    }).format(checkoutAmount);
+
+    // Create new order record
+    const newOrder = {
+      orderId: `ORD-${Date.now()}`,
+      customerName,
+      customerPhone: details.phone || '',
+      customerAddress: details.address || '',
+      products: checkoutItems.map(item => ({
+        productId: item.product.id,
+        productTitle: item.product.title,
+        quantity: item.quantity,
+        price: item.product.price
+      })),
+      totalAmount: checkoutAmount,
+      orderDate: new Date().toISOString()
+    };
+
+    // Save order data to local Vite dev server endpoint to save to orders.json on disk
+    fetch('/api/save-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newOrder)
+    }).catch(err => console.error('Failed to save order to disk:', err));
+
+    // Clear cart
+    setCartItems([]);
+    // Close checkout modal
+    setIsCheckoutOpen(false);
 
     // Show order success toast
-    addToast('Order Placed', `Order placed successfully! Total: ${formattedAmount}`, null, 'order');
+    addToast('Order Placed', `Order placed successfully by ${customerName}! Total: ${formattedAmount}`, null, 'order');
   };
 
   const handleToggleWishlist = (product) => {
@@ -338,6 +377,7 @@ export default function App() {
                   product={product}
                   onSelectProduct={(prod) => setSelectedProduct(prod)}
                   onAddToCart={handleAddToCart}
+                  onPlaceOrder={(amount) => handlePlaceOrder(amount, [{ product, quantity: 1 }])}
                   isWishlisted={wishlistItems.some((item) => item.id === product.id)}
                   onToggleWishlist={handleToggleWishlist}
                 />
@@ -384,7 +424,7 @@ export default function App() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
         onClearCart={() => setCartItems([])}
-        onPlaceOrder={handlePlaceOrder}
+        onPlaceOrder={(amount) => handlePlaceOrder(amount, cartItems)}
       />
 
       {/* Wishlist Drawer */}
@@ -402,11 +442,19 @@ export default function App() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={handleAddToCart}
-          onPlaceOrder={handlePlaceOrder}
+          onPlaceOrder={(amount) => handlePlaceOrder(amount, [{ product: selectedProduct, quantity: 1 }])}
           isWishlisted={wishlistItems.some((item) => item.id === selectedProduct.id)}
           onToggleWishlist={handleToggleWishlist}
         />
       )}
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        totalAmount={checkoutAmount}
+        onConfirm={handleConfirmOrder}
+      />
 
       {/* Toast Notifications Container */}
       <div className="toast-container">

@@ -1,7 +1,6 @@
-import React from 'react';
 import { Star, Plus, Heart } from 'lucide-react';
 
-export default function ProductCard({ product, onSelectProduct, onAddToCart, isWishlisted, onToggleWishlist }) {
+export default function ProductCard({ product, onSelectProduct, onAddToCart, onPlaceOrder, isWishlisted, onToggleWishlist }) {
   // Format currency
   const formatPrice = (value) => {
     return new Intl.NumberFormat('en-IN', {
@@ -14,6 +13,11 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart, isW
   const handleAddToCart = (e) => {
     e.stopPropagation(); // Prevent opening product detail modal
     onAddToCart(product);
+  };
+
+  const handleBuyNow = (e) => {
+    e.stopPropagation(); // Prevent opening product detail modal
+    onPlaceOrder(product.price);
   };
 
   return (
@@ -65,9 +69,14 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart, isW
           ) : (
             <div /> // Placeholder
           )}
-          <button className="card-add-btn" onClick={handleAddToCart}>
-            <Plus size={14} /> Add
-          </button>
+          <div className="card-action-group" style={{ display: 'flex', gap: '6px' }}>
+            <button className="card-add-btn" onClick={handleAddToCart}>
+              <Plus size={12} /> Add
+            </button>
+            <button className="card-buy-btn" onClick={handleBuyNow}>
+              Buy
+            </button>
+          </div>
         </div>
       </div>
     </div>

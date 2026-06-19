@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, ShoppingCart, ChevronDown, User, Sun, Moon, Bell, HelpCircle, Briefcase, Download, LogOut, Heart, Gift, ShieldAlert } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Search, ShoppingCart, ChevronDown, User, Sun, Moon, Bell, HelpCircle, Briefcase, Download, LogOut, Heart, Gift } from 'lucide-react';
 import { productsData } from '../data/productsData';
 
 export default function Navbar({ searchQuery, setSearchQuery, cartCount, onCartOpen, theme, toggleTheme, onSelectProduct, onWishlistOpen }) {
