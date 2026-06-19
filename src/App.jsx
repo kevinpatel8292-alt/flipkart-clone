@@ -454,6 +454,7 @@ export default function App() {
         onClose={() => setIsCheckoutOpen(false)}
         totalAmount={checkoutAmount}
         onConfirm={handleConfirmOrder}
+        items={checkoutItems}
       />
 
       {/* Toast Notifications Container */}

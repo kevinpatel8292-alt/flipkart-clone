@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { X, User, MapPin, Phone, CreditCard, ShoppingBag } from 'lucide-react';
 
-export default function CheckoutModal({ isOpen, onClose, totalAmount, onConfirm }) {
+export default function CheckoutModal({ isOpen, onClose, totalAmount, onConfirm, items = [] }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [error, setError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [addressError, setAddressError] = useState('');
 
   if (!isOpen) return null;
 
@@ -18,14 +20,44 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, onConfirm 
     }).format(value);
   };
 
+  const resetForm = () => {
+    setName('');
+    setPhone('');
+    setAddress('');
+    setNameError('');
+    setPhoneError('');
+    setAddressError('');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    let valid = true;
+
     if (!name.trim()) {
-      setError('Name is compulsory. Please enter your name to confirm the order.');
-      return;
+      setNameError('Full name is required.');
+      valid = false;
+    } else {
+      setNameError('');
     }
-    setError('');
+
+    if (!phone.trim() || phone.trim().length < 10) {
+      setPhoneError('A valid 10-digit phone number is required.');
+      valid = false;
+    } else {
+      setPhoneError('');
+    }
+
+    if (!address.trim()) {
+      setAddressError('Delivery address is required.');
+      valid = false;
+    } else {
+      setAddressError('');
+    }
+
+    if (!valid) return;
+
     onConfirm(name.trim(), { phone: phone.trim(), address: address.trim() });
+    resetForm();
   };
 
   return (
@@ -45,12 +77,12 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, onConfirm 
             </div>
 
             <form onSubmit={handleSubmit} className="checkout-form">
-              {/* Name (Compulsory) */}
+              {/* Name (Required) */}
               <div className="form-group">
                 <label htmlFor="customer-name" className="form-label">
                   Full Name <span className="required-star">*</span>
                 </label>
-                <div className={`input-wrapper ${error ? 'input-error' : ''}`}>
+                <div className={`input-wrapper ${nameError ? 'input-error' : ''}`}>
                   <User size={18} className="input-icon" />
                   <input
                     type="text"
@@ -59,49 +91,57 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, onConfirm 
                     value={name}
                     onChange={(e) => {
                       setName(e.target.value);
-                      if (e.target.value.trim()) setError('');
+                      if (e.target.value.trim()) setNameError('');
                     }}
                     className="form-input"
                     autoFocus
                   />
                 </div>
-                {error && <span className="error-text">{error}</span>}
+                {nameError && <span className="error-text">{nameError}</span>}
               </div>
 
-              {/* Phone (Optional) */}
+              {/* Phone (Required) */}
               <div className="form-group">
                 <label htmlFor="customer-phone" className="form-label">
-                  Phone Number <span className="optional-tag">(Optional)</span>
+                  Phone Number <span className="required-star">*</span>
                 </label>
-                <div className="input-wrapper">
+                <div className={`input-wrapper ${phoneError ? 'input-error' : ''}`}>
                   <Phone size={18} className="input-icon" />
                   <input
                     type="tel"
                     id="customer-phone"
                     placeholder="Enter 10-digit mobile number"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    onChange={(e) => {
+                      setPhone(e.target.value.replace(/\D/g, '').slice(0, 10));
+                      if (e.target.value.trim()) setPhoneError('');
+                    }}
                     className="form-input"
                   />
                 </div>
+                {phoneError && <span className="error-text">{phoneError}</span>}
               </div>
 
-              {/* Address (Optional) */}
+              {/* Address (Required) */}
               <div className="form-group">
                 <label htmlFor="customer-address" className="form-label">
-                  Delivery Address <span className="optional-tag">(Optional)</span>
+                  Delivery Address <span className="required-star">*</span>
                 </label>
-                <div className="input-wrapper textarea-wrapper">
+                <div className={`input-wrapper textarea-wrapper ${addressError ? 'input-error' : ''}`}>
                   <MapPin size={18} className="input-icon textarea-icon" />
                   <textarea
                     id="customer-address"
                     placeholder="Enter complete shipping address"
                     value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                      if (e.target.value.trim()) setAddressError('');
+                    }}
                     className="form-input form-textarea"
                     rows={3}
                   />
                 </div>
+                {addressError && <span className="error-text">{addressError}</span>}
               </div>
 
               {/* Payment Method Option (Visual only, locked to Cash on Delivery) */}
@@ -136,6 +176,24 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, onConfirm 
               <ShoppingBag size={18} /> Order Summary
             </h3>
             
+            {/* Product Image List */}
+            <div className="checkout-items-list">
+              {items.map((item, idx) => (
+                <div key={idx} className="checkout-item-row">
+                  <img
+                    src={item.product.thumbnail}
+                    alt={item.product.title}
+                    className="checkout-item-img"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                  <div className="checkout-item-info">
+                    <p className="checkout-item-title">{item.product.title}</p>
+                    <span className="checkout-item-meta">Qty: {item.quantity} &nbsp;|&nbsp; {formatPrice(item.product.price * item.quantity)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div className="checkout-summary-box">
               <div className="summary-item-row">
                 <span>Items Subtotal</span>

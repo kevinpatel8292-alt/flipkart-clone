@@ -231,10 +231,12 @@ export const productsData = [
     id: 'fash-02',
     title: "Tommy Hilfiger Men's Slim Fit Solid Casual Cotton Shirt",
     category: 'fashion',
-    thumbnail: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=300&auto=format&fit=crop&q=80',
+    thumbnail: '/images/shirt_main.png',
     images: [
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1621072156002-e2fcc104e761?w=600&auto=format&fit=crop&q=80'
+      '/images/shirt_main.png',
+      '/images/shirt_worn.png',
+      '/images/shirt_detail.png',
+      '/images/shirt_back.png'
     ],
     originalPrice: 4999,
     price: 2499,
@@ -372,10 +374,12 @@ export const productsData = [
     id: 'mob-03',
     title: 'Nothing Phone (2a) 5G (Milk White, 128 GB, 8 GB RAM)',
     category: 'mobiles',
-    thumbnail: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=300&auto=format&fit=crop&q=80',
+    thumbnail: '/images/nothing_phone_front.png',
     images: [
-      'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1565849906660-bf47e125f48b?w=600&auto=format&fit=crop&q=80'
+      '/images/nothing_phone_front.png',
+      '/images/nothing_phone_back.png',
+      '/images/nothing_phone_glyph.png',
+      '/images/nothing_phone_side.png'
     ],
     originalPrice: 25999,
     price: 23999,

@@ -1,3 +1,0 @@
-OrderID: ORD-1781843219235, CustomerName: abc, CustomerPhone: 9987456847, CustomerAddress: uk
-Products: Apple iPhone 17 Pro max (Natural Titanium, 128 GB) (x1), TotalAmount: 119999, OrderDate: 2026-06-19T04:26:59.235Z
---------------------------------------------------------------------------------

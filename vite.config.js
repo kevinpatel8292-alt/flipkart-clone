@@ -21,19 +21,25 @@ export default defineConfig({
             });
             req.on('end', () => {
               try {
-                const orderData = JSON.parse(body);
-                const filePath = path.resolve(__dirname, 'orders.txt');
-                
-                // Format products list
-                const productsStr = orderData.products.map(p => `${p.productTitle} (x${p.quantity})`).join('; ');
-                
-                // Build 2-line text layout
-                const line1 = `OrderID: ${orderData.orderId}, CustomerName: ${orderData.customerName}, CustomerPhone: ${orderData.customerPhone}, CustomerAddress: ${orderData.customerAddress}\n`;
-                const line2 = `Products: ${productsStr}, TotalAmount: ${orderData.totalAmount}, OrderDate: ${orderData.orderDate}\n`;
-                const divider = `--------------------------------------------------------------------------------\n`;
-                
-                fs.appendFileSync(filePath, line1 + line2 + divider, 'utf-8');
-                
+                const newOrder = JSON.parse(body);
+                const filePath = path.resolve(__dirname, 'orders.json');
+
+                // Read existing orders (or start fresh)
+                let orders = [];
+                if (fs.existsSync(filePath)) {
+                  try {
+                    const raw = fs.readFileSync(filePath, 'utf-8');
+                    orders = JSON.parse(raw);
+                    if (!Array.isArray(orders)) orders = [];
+                  } catch {
+                    orders = [];
+                  }
+                }
+
+                // Append new order and write back
+                orders.push(newOrder);
+                fs.writeFileSync(filePath, JSON.stringify(orders, null, 2), 'utf-8');
+
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify({ success: true }));
@@ -51,3 +57,4 @@ export default defineConfig({
     }
   ],
 })
+
